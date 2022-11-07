@@ -25,6 +25,7 @@ class Meal {
   final bool isVegetarian;
   final Complexity complexity;
   final Cost cost;
+  final List<String> ingredients;
 
   const Meal({
     required this.id,
@@ -39,7 +40,7 @@ class Meal {
     required this.isVegetarian,
     required this.complexity,
     required this.cost,
-    required List<String> ingredients,
+    required this.ingredients,
   });
 
   String get complexityText {
