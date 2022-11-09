@@ -1,9 +1,10 @@
-import 'dart:ffi';
-
+import '../utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
-  Widget _creatItem(IconData icon, String label) {
+  const MainDrawer({Key? key}) : super(key: key);
+
+  Widget _creatItem(IconData icon, String label, Function() onTap) {
     return ListTile(
       leading: Icon(
         icon,
@@ -12,15 +13,14 @@ class MainDrawer extends StatelessWidget {
       title: Text(
         label,
         style: const TextStyle(
-            fontFamily: 'RobotoCondensed',
-            fontSize: 24,
-            fontWeight: FontWeight.bold),
+          fontFamily: 'RobotoCondensed',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
-
-  const MainDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class MainDrawer extends StatelessWidget {
           Container(
             height: 120,
             width: double.infinity,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             color: Theme.of(context).colorScheme.secondary,
             alignment: Alignment.bottomCenter,
             child: Text(
@@ -44,7 +44,16 @@ class MainDrawer extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          _creatItem(Icons.restaurant, 'Refeições')
+          _creatItem(
+            Icons.restaurant,
+            'Refeições',
+            () => Navigator.of(context).pushNamed(AppRoutes.HOME),
+          ),
+          _creatItem(
+            Icons.settings,
+            'Settings',
+            () => Navigator.of(context).pushNamed(AppRoutes.SETTINGS),
+          ),
         ],
       ),
     );
