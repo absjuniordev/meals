@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals/screens/categorias_meals_screen.dart';
 import 'package:meals/screens/meals_detail_screen.dart';
-import 'screens/categories_screen.dart';
+import 'models/meals.dart';
+import 'data/dummy_data.dart';
 import 'screens/setting_screen.dart';
 
 import 'utils/app_routes.dart';
@@ -11,8 +12,15 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<Meal> _availableMeals = DUMMY_MEALS;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,8 @@ class MyApp extends StatelessWidget {
       // home: const CategoriesScreen(),
       routes: {
         AppRoutes.HOME: (ctx) => const TabsScreen(),
-        AppRoutes.CATEGORIES_MEALS: (ctx) => const CategoriesMealsScreen(),
+        AppRoutes.CATEGORIES_MEALS: (ctx) =>
+            CategoriesMealsScreen(_availableMeals),
         AppRoutes.MEAL_DETAIL: (ctx) => const MealDeatailScreen(),
         AppRoutes.SETTINGS: (ctx) => const SettingsScreen(),
       },
