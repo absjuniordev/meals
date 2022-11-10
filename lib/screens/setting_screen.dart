@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:meals/models/settings.dart';
 import '../components/main_drawer.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  var settings = Settings();
+  Widget _creatSwitch(
+    String title,
+    String subtitle,
+    bool value,
+    Function(bool) onChanged,
+  ) {
+    return SwitchListTile.adaptive(
+      title: Text(title),
+      subtitle: Text(subtitle),
+      value: value,
+      onChanged: onChanged,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +32,45 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Configurações'),
       ),
       drawer: const MainDrawer(),
-      body: const Center(
-        child: Text('Configurações'),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              'Configurações',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+          Expanded(
+              child: ListView(
+            children: [
+              _creatSwitch(
+                'Sem Glutén',
+                'Só exibe refeições sem glutén',
+                settings.isGlutenFree,
+                (value) => setState(() => settings.isGlutenFree = value),
+              ),
+              _creatSwitch(
+                'Sem Lactose',
+                'Só exibe refeições sem lactose',
+                settings.isLactoseFree,
+                (value) => setState(() => settings.isGlutenFree = value),
+              ),
+              _creatSwitch(
+                'Vegana',
+                'Só exibe refeições veganas',
+                settings.isVegan,
+                (value) => setState(() => settings.isGlutenFree = value),
+              ),
+              _creatSwitch(
+                'Vegetariana',
+                'Só exibe refeições vegetarianas',
+                settings.isVegetarian,
+                (value) => setState(() => settings.isGlutenFree = value),
+              )
+            ],
+          ))
+        ],
       ),
     );
   }
