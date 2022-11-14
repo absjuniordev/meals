@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import '../models/meals.dart';
 
 class MealDeatailScreen extends StatelessWidget {
+  final Function(Meal) onToggleFavorite;
+  final bool Function(Meal) isFavorite;
+
+  const MealDeatailScreen(this.onToggleFavorite, this.isFavorite, {super.key});
+
   Widget _createSectionTitle(BuildContext context, String text) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -17,8 +22,8 @@ class MealDeatailScreen extends StatelessWidget {
     return Container(
       width: 320,
       height: 200,
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(4),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey),
@@ -26,8 +31,6 @@ class MealDeatailScreen extends StatelessWidget {
       child: child,
     );
   }
-
-  const MealDeatailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class MealDeatailScreen extends StatelessWidget {
                 itemCount: meal.ingredients.length,
                 itemBuilder: (ctx, index) {
                   return Card(
+                    color: Theme.of(context).colorScheme.secondary,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 5,
@@ -61,7 +65,6 @@ class MealDeatailScreen extends StatelessWidget {
                       ),
                       child: Text(meal.ingredients[index]),
                     ),
-                    color: Theme.of(context).colorScheme.secondary,
                   );
                 },
               ),
@@ -89,9 +92,10 @@ class MealDeatailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.star),
+        backgroundColor: Color.fromARGB(255, 181, 77, 32),
+        child: Icon(isFavorite(meal) ? Icons.star : Icons.star_border),
         onPressed: () {
-          Navigator.of(context).pop(meal);
+          onToggleFavorite(meal);
         },
       ),
     );

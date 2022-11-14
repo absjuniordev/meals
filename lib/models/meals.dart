@@ -56,6 +56,7 @@ class Meal {
     }
   }
 
+  // ignore: non_constant_identifier_names
   String get CostText {
     switch (cost) {
       case Cost.Cheap:
